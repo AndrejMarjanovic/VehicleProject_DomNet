@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vehicle.Model.Common;
 
 namespace Vehicle.Model
 {
-    public class VehicleModel
+    public class VehicleModel : IVehicleModel
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
