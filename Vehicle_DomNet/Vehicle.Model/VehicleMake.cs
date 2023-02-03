@@ -10,7 +10,7 @@ namespace Vehicle.Model
     public class VehicleMake : IVehicleMake
     {
         public int Id { get; set; }
-        public string Name { get; set; } = null!;
-        public string Abrv { get; set; } = null!;
+        public string Name { get; set; } 
+        public string Abrv { get; set; } 
     }
 }

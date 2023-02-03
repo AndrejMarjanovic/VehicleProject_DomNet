@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vehicle.DAL", "Vehicle.DAL\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vehicle.Model", "Vehicle.Model\Vehicle.Model.csproj", "{CE4BC101-8148-4886-B020-835A468DF201}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vehicle.Model.Common", "Vehicle.Model.Common\Vehicle.Model.Common.csproj", "{8D019891-7DE3-4A8A-A00C-795A4E74007B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vehicle.Model.Common", "Vehicle.Model.Common\Vehicle.Model.Common.csproj", "{8D019891-7DE3-4A8A-A00C-795A4E74007B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vehicle.Models", "Vehicle.Models", "{924C0543-EC77-4CAE-BAD6-6862FBBE0EFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +38,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CE4BC101-8148-4886-B020-835A468DF201} = {924C0543-EC77-4CAE-BAD6-6862FBBE0EFA}
+		{8D019891-7DE3-4A8A-A00C-795A4E74007B} = {924C0543-EC77-4CAE-BAD6-6862FBBE0EFA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {33A01300-8C79-4A23-A2BD-6158750106B6}
