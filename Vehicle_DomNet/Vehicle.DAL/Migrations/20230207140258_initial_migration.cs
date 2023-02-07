@@ -5,7 +5,7 @@
 namespace Vehicle.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class initialmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -44,16 +44,6 @@ namespace Vehicle.DAL.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.InsertData(
-                table: "VehicleMake",
-                columns: new[] { "Id", "Abrv", "Name" },
-                values: new object[] { 1, "VW", "Volkswagen" });
-
-            migrationBuilder.InsertData(
-                table: "VehicleModel",
-                columns: new[] { "Id", "Abrv", "Name", "VehicleMakeId" },
-                values: new object[] { 1, "G", "Golf", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_VehicleModel_VehicleMakeId",

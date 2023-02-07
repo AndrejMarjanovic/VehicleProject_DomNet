@@ -25,25 +25,10 @@ namespace Vehicle.DAL
                  .HasOne(pt => pt.VehicleMake).WithMany().HasForeignKey(pt => pt.VehicleMakeId)
                  .OnDelete(DeleteBehavior.Restrict);
 
-            SeedVehicleMake(modelBuilder);
-            SeedVehicleModel(modelBuilder);
         }
 
         public DbSet<VehicleMake> VehicleMake { get; set; }
         public DbSet<VehicleModel> VehicleModel { get; set; }
 
-        private void SeedVehicleMake(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<VehicleMake>().HasData(
-                new VehicleMake { Id = 1, Name = "Volkswagen", Abrv = "VW" }
-                );
-        }
-
-        private void SeedVehicleModel(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<VehicleModel>().HasData(
-                new VehicleModel { Id = 1, Name = "Golf", Abrv = "G", VehicleMakeId = 1 }
-                );
-        }
     }
 }

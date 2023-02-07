@@ -11,8 +11,8 @@ using Vehicle.DAL;
 namespace Vehicle.DAL.Migrations
 {
     [DbContext(typeof(VehicleContext))]
-    [Migration("20230202155722_initial")]
-    partial class initial
+    [Migration("20230207140258_initial_migration")]
+    partial class initialmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,14 +43,6 @@ namespace Vehicle.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("VehicleMake");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Abrv = "VW",
-                            Name = "Volkswagen"
-                        });
                 });
 
             modelBuilder.Entity("Vehicle.DAL.Entiteti.VehicleModel", b =>
@@ -77,15 +69,6 @@ namespace Vehicle.DAL.Migrations
                     b.HasIndex("VehicleMakeId");
 
                     b.ToTable("VehicleModel");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Abrv = "G",
-                            Name = "Golf",
-                            VehicleMakeId = 1
-                        });
                 });
 
             modelBuilder.Entity("Vehicle.DAL.Entiteti.VehicleModel", b =>
