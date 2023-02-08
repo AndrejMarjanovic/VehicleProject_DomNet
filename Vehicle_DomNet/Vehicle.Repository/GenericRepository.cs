@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,17 +19,17 @@ namespace Vehicle.Repository
         {
             _db = context;
             dbSet = _db.Set<TEntity>();
+
         }
 
-        public async Task<TEntity> Get(int id)
+        public async Task<TEntity> GetById(int id)
         {
-            return await dbSet.FindAsync(id);
- 
+           return await dbSet.FindAsync(id);
         }
 
         public async void Add(TEntity entity)
         {
-            await _db.Set<TEntity>().AddAsync(entity);
+            await dbSet.AddAsync(entity);
             await _db.SaveChangesAsync();
         }
 
@@ -39,7 +40,7 @@ namespace Vehicle.Repository
         }
         public async void Delete(int id)
         {
-            var entity = await Get(id);
+            var entity = await GetById(id);
             dbSet.Remove(entity);
             await _db.SaveChangesAsync();
         }

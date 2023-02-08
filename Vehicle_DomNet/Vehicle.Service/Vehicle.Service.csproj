@@ -7,11 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Vehicle.Model\Vehicle.Model.csproj" />
+    <ProjectReference Include="..\Vehicle.Repository.Common\Vehicle.Repository.Common.csproj" />
+    <ProjectReference Include="..\Vehicle.Service.Common\Vehicle.Service.Common.csproj" />
   </ItemGroup>
 
 </Project>

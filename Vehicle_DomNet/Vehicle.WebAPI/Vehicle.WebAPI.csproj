@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
       <PrivateAssets>all</PrivateAssets>
@@ -22,10 +23,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Vehicle.DAL\Vehicle.DAL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\Vehicle.Repository.Common\Vehicle.Repository.Common.csproj" />
+    <ProjectReference Include="..\Vehicle.Repository\Vehicle.Repository.csproj" />
+    <ProjectReference Include="..\Vehicle.Service.Common\Vehicle.Service.Common.csproj" />
+    <ProjectReference Include="..\Vehicle.Service\Vehicle.Service.csproj" />
   </ItemGroup>
 
 </Project>

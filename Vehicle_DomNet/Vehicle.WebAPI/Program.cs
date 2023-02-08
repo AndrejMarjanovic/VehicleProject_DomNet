@@ -1,5 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Vehicle.DAL;
+using Vehicle.Model;
+using Vehicle.Model.Common;
+using Vehicle.Repository;
+using Vehicle.Repository.Common;
+using Vehicle.Service;
+using Vehicle.Service.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +15,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddTransient<IVehicleMakeService, VehicleMakeService>();
+builder.Services.AddTransient<IVehicleMakeRepository, VehicleMakeRepository>();
+builder.Services.AddTransient<IVehicleMake, VehicleMake>();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<VehicleContext>(options =>
