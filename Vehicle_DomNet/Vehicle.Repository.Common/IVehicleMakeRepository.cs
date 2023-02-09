@@ -10,7 +10,8 @@ namespace Vehicle.Repository.Common
 {
     public interface IVehicleMakeRepository
     {
-        Task<IVehicleMake> GetVehicleMakeById(int id);
-
+        Task<IVehicleMakeModel> GetVehicleMakeById(int id);
+        Task<IEnumerable<IVehicleMakeModel>> GetVehicleMakes();
+        Task AddVehicleMake(IVehicleMakeModel vehicleMake);
     }
 }

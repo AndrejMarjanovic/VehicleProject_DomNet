@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Vehicle.Model.Common
 {
-    public interface IVehicleModel
+    public interface IVehicleModelModel
     {
         int Id { get; set; }
         string Name { get; set; }

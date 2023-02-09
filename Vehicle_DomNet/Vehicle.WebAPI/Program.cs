@@ -18,7 +18,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IVehicleMakeService, VehicleMakeService>();
 builder.Services.AddTransient<IVehicleMakeRepository, VehicleMakeRepository>();
-builder.Services.AddTransient<IVehicleMake, VehicleMake>();
+builder.Services.AddTransient<IVehicleMakeModel, VehicleMakeModel>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

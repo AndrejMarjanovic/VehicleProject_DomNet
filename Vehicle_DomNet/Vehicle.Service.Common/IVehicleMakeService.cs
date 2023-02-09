@@ -10,6 +10,8 @@ namespace Vehicle.Service.Common
 {
     public interface IVehicleMakeService
     {
-        public Task<IVehicleMake> GetVehicleMakeById(int id);
+        public Task<IVehicleMakeModel> GetVehicleMakeById(int id);
+        public Task<IEnumerable<IVehicleMakeModel>> GetVehicleMakes();
+        Task AddVehicleMake(IVehicleMakeModel vehicleMake);
     }
 }

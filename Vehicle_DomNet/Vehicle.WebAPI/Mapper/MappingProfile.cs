@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Vehicle.DAL.Entiteti;
+using Vehicle.Model;
+using Vehicle.WebAPI.Models;
 
 namespace Vehicle.WebAPI.Mapper
 {
@@ -7,8 +9,8 @@ namespace Vehicle.WebAPI.Mapper
     {
         public MappingProfile()
         {
-           CreateMap<VehicleMake, Vehicle.Model.VehicleMake>().ReverseMap();
-           CreateMap<Vehicle.Model.VehicleMake, Models.VehicleMakeModel>().ReverseMap();
+           CreateMap<VehicleMake, VehicleMakeModel>().ReverseMap();
+           CreateMap<VehicleMakeModel, VehicleMakeRestModel>().ReverseMap();
         }
     }
 }

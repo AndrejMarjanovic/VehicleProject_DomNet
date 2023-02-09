@@ -1,6 +1,6 @@
 ﻿namespace Vehicle.WebAPI.Models
 {
-    public class VehicleMakeModel
+    public class VehicleMakeRestModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

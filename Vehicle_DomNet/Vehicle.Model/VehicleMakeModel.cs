@@ -7,7 +7,7 @@ using Vehicle.Model.Common;
 
 namespace Vehicle.Model
 {
-    public class VehicleMake : IVehicleMake
+    public class VehicleMakeModel : IVehicleMakeModel
     {
         public int Id { get; set; }
         public string Name { get; set; } 
