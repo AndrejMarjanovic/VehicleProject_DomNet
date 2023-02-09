@@ -7,7 +7,8 @@ namespace Vehicle.WebAPI.Mapper
     {
         public MappingProfile()
         {
-            CreateMap<VehicleMake, Vehicle.Model.VehicleMake>().ReverseMap();
+           CreateMap<VehicleMake, Vehicle.Model.VehicleMake>().ReverseMap();
+           CreateMap<Vehicle.Model.VehicleMake, Models.VehicleMakeModel>().ReverseMap();
         }
     }
 }

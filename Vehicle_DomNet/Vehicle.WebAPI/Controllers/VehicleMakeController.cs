@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Vehicle.Model;
 using Vehicle.Model.Common;
-using Vehicle.Repository.Common;
 using Vehicle.Service.Common;
+using Vehicle.WebAPI.Models;
 
 namespace Vehicle.WebAPI.Controllers
 {
@@ -21,10 +21,11 @@ namespace Vehicle.WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IVehicleMake> GetVehicleMakeById(int id)
+        public async Task<VehicleMakeModel> GetVehicleMakeById(int id)
         {
             IVehicleMake vehicleMake = await _service.GetVehicleMakeById(id);
-            return vehicleMake;
+            VehicleMakeModel VM = _mapper.Map<VehicleMakeModel>(vehicleMake);
+            return VM;
         }
 
     }
