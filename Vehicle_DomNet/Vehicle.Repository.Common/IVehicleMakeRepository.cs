@@ -13,5 +13,6 @@ namespace Vehicle.Repository.Common
         Task<IVehicleMakeModel> GetVehicleMakeById(int id);
         Task<IEnumerable<IVehicleMakeModel>> GetVehicleMakes();
         Task AddVehicleMake(IVehicleMakeModel vehicleMake);
+        Task EditVehicleMake(int id, IVehicleMakeModel vehicleMake);
     }
 }

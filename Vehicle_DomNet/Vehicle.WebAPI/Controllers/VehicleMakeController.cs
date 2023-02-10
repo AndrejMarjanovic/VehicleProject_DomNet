@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using Vehicle.Model;
 using Vehicle.Model.Common;
 using Vehicle.Service.Common;
@@ -21,32 +22,55 @@ namespace Vehicle.WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<VehicleMakeRestModel> GetVehicleMakeById(int id)
-        {
-            IVehicleMakeModel vehicleMake = await _service.GetVehicleMakeById(id);
-            VehicleMakeRestModel vehicleMakeRestModel = _mapper.Map<VehicleMakeRestModel>(vehicleMake);
-            return vehicleMakeRestModel;
-        }
-
-        [HttpGet]
-        public async Task<List<VehicleMakeRestModel>> GetVehicleMakes()
-        {
-            IEnumerable<IVehicleMakeModel> vehicleMakes = await _service.GetVehicleMakes();
-            List<VehicleMakeRestModel> vehicleMakesRestModel = _mapper.Map<List<VehicleMakeRestModel>>(vehicleMakes);
-            return vehicleMakesRestModel;
-        }
-
-        [HttpPost]
-        public async Task AddVehicleMake(VehicleMakeRestModel vehicleMakeRestModel)
+        public async Task<ActionResult<VehicleMakeGetModel>> GetVehicleMakeById(int id)
         {
             try
             {
-                IVehicleMakeModel vehicleMakeModel = _mapper.Map<VehicleMakeModel>(vehicleMakeRestModel);
-                await _service.AddVehicleMake(vehicleMakeModel);
+                IVehicleMakeModel vehicleMake = await _service.GetVehicleMakeById(id);
+                VehicleMakeGetModel vehicleMakeGetModel = _mapper.Map<VehicleMakeGetModel>(vehicleMake);
+                return vehicleMakeGetModel == null ? NotFound() : Ok(vehicleMakeGetModel);
             }
-            catch(Exception ex)
+            catch
             {
-                throw new Exception("Post request failed.", ex);
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetVehicleMakes()
+        {
+            IEnumerable<IVehicleMakeModel> vehicleMakes = await _service.GetVehicleMakes();
+            List<VehicleMakeGetModel> vehicleMakesGetModel = _mapper.Map<List<VehicleMakeGetModel>>(vehicleMakes);
+            return Ok(vehicleMakesGetModel);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<VehicleMakePostModel>> PostVehicleMake(VehicleMakePostModel vehicleMakePostModel)
+        {
+            try
+            {
+                IVehicleMakeModel vehicleMakeModel = _mapper.Map<VehicleMakeModel>(vehicleMakePostModel);
+                await _service.AddVehicleMake(vehicleMakeModel);
+                return Ok(vehicleMakePostModel);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<VehicleMakePostModel>> PutVehicleMake(int id, VehicleMakePostModel vehicleMakePostModel)
+        {
+            try
+            {
+                IVehicleMakeModel vehicleMake = _mapper.Map<VehicleMakeModel>(vehicleMakePostModel);
+                await _service.EditVehicleMake(id, vehicleMake);
+                return Ok(vehicleMakePostModel);
+            }
+            catch
+            {
+                return BadRequest();
             }
         }
 

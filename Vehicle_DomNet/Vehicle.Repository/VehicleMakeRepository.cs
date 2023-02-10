@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,9 +38,24 @@ namespace Vehicle.Repository
         {
             try
             {
-                VehicleMake vehicleMake = mapper.Map<VehicleMake>(vehicleMakeModel);
+               VehicleMake vehicleMake = mapper.Map<VehicleMake>(vehicleMakeModel);
                await _db.VehicleMake.AddAsync(vehicleMake);
                await _db.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Operation failed.", ex);
+            }
+        }
+
+        public async Task EditVehicleMake(int id, IVehicleMakeModel vehicleMakeModel)
+        {
+            try
+            {
+                VehicleMake vehicleMake = mapper.Map<VehicleMake>(vehicleMakeModel);
+                vehicleMake.Id = id;
+                _db.Entry(vehicleMake).State = EntityState.Modified;
+                await _db.SaveChangesAsync();
             }
             catch(Exception ex)
             {
