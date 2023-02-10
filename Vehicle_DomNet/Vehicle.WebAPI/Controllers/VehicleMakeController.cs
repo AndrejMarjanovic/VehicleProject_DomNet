@@ -74,5 +74,20 @@ namespace Vehicle.WebAPI.Controllers
             }
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteVehicleModel(int id)
+        {
+             IVehicleMakeModel vehicleMake = await _service.GetVehicleMakeById(id);
+            try
+            {
+                await _service.DeleteVehicleMake(id);
+                //return Ok(vehicleMake);
+                return NoContent();
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
     }
 }

@@ -20,6 +20,10 @@ builder.Services.AddTransient<IVehicleMakeService, VehicleMakeService>();
 builder.Services.AddTransient<IVehicleMakeRepository, VehicleMakeRepository>();
 builder.Services.AddTransient<IVehicleMakeModel, VehicleMakeModel>();
 
+builder.Services.AddTransient<IVehicleModelService, VehicleModelService>();
+builder.Services.AddTransient<IVehicleModelRepository, VehicleModelRepository>();
+builder.Services.AddTransient<IVehicleModelModel, VehicleModelModel>();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");

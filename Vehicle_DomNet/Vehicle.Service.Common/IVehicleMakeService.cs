@@ -14,5 +14,6 @@ namespace Vehicle.Service.Common
         public Task<IEnumerable<IVehicleMakeModel>> GetVehicleMakes();
         Task AddVehicleMake(IVehicleMakeModel vehicleMake);
         Task EditVehicleMake(int id, IVehicleMakeModel vehicleMake);
+        Task DeleteVehicleMake(int id);
     }
 }

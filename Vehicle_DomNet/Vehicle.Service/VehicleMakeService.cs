@@ -54,5 +54,17 @@ namespace Vehicle.Service
                 throw new Exception("Operation failed", ex);
             }
         }
+
+        public async Task DeleteVehicleMake(int id)
+        {
+            try
+            {
+                await VMakeRepository.DeleteVehicleMake(id);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Operation failed", ex);
+            }
+        }
     }
 }

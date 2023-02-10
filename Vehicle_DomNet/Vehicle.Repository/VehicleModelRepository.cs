@@ -13,33 +13,33 @@ using Vehicle.Repository.Common;
 
 namespace Vehicle.Repository
 {
-    public class VehicleMakeRepository : IVehicleMakeRepository
+    public class VehicleModelRepository : IVehicleModelRepository
     {
         private readonly VehicleContext _db;
         private readonly IMapper mapper;
 
-        public VehicleMakeRepository(VehicleContext context, IMapper map)
+        public VehicleModelRepository(VehicleContext context, IMapper map)
         {
             mapper = map;
             _db = context;
         }
-        public async Task<IVehicleMakeModel> GetVehicleMakeById(int id)
+        public async Task<IVehicleModelModel> GetVehicleModelById(int id)
         {
-            VehicleMake vehicleMake = _db.VehicleMake.Find(id);
-            return mapper.Map<VehicleMakeModel>(vehicleMake);
+            VehicleModel vehicleModel = _db.VehicleModel.Find(id);
+            return mapper.Map<VehicleModelModel>(vehicleModel);
         }
 
-        public async Task<IEnumerable<IVehicleMakeModel>> GetVehicleMakes()
+        public async Task<IEnumerable<IVehicleModelModel>> GetVehicleModels()
         {
-             return mapper.Map<IEnumerable<VehicleMakeModel>>(_db.VehicleMake);
+             return mapper.Map<IEnumerable<VehicleModelModel>>(_db.VehicleModel);
         }
 
-        public async Task AddVehicleMake(IVehicleMakeModel vehicleMakeModel)
+        public async Task AddVehicleModel(IVehicleModelModel vehicleModelModel)
         {
             try
             {
-               VehicleMake vehicleMake = mapper.Map<VehicleMake>(vehicleMakeModel);
-               await _db.VehicleMake.AddAsync(vehicleMake);
+               VehicleModel vehicleModel = mapper.Map<VehicleModel>(vehicleModelModel);
+               await _db.VehicleModel.AddAsync(vehicleModel);
                await _db.SaveChangesAsync();
             }
             catch(Exception ex)
@@ -48,13 +48,13 @@ namespace Vehicle.Repository
             }
         }
 
-        public async Task EditVehicleMake(int id, IVehicleMakeModel vehicleMakeModel)
+        public async Task EditVehicleModel(int id, IVehicleModelModel vehicleModelModel)
         {
             try
             {
-                VehicleMake vehicleMake = mapper.Map<VehicleMake>(vehicleMakeModel);
-                vehicleMake.Id = id;
-                _db.Entry(vehicleMake).State = EntityState.Modified;
+                VehicleModel vehicleModel = mapper.Map<VehicleModel>(vehicleModelModel);
+                vehicleModel.Id = id;
+                _db.Entry(vehicleModel).State = EntityState.Modified;
                 await _db.SaveChangesAsync();
             }
             catch(Exception ex)
@@ -63,12 +63,12 @@ namespace Vehicle.Repository
             }
         }
 
-        public async Task DeleteVehicleMake(int id)
+        public async Task DeleteVehicleModel(int id)
         {
             try
             {
-                VehicleMake vehicleMake = await _db.VehicleMake.FindAsync(id);
-                _db.Remove(vehicleMake);
+                VehicleModel vehicleModel = await _db.VehicleModel.FindAsync(id);
+                _db.Remove(vehicleModel);
                 await _db.SaveChangesAsync();
 
             }
