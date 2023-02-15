@@ -17,9 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vehicle.Repository", "Vehic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vehicle.Repository.Common", "Vehicle.Repository.Common\Vehicle.Repository.Common.csproj", "{94908264-C3C9-4B69-983F-B4C6AC56BCD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vehicle.Service", "Vehicle.Service\Vehicle.Service.csproj", "{2E680F32-3F49-42A6-B22A-38CC295D1A43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vehicle.Service", "Vehicle.Service\Vehicle.Service.csproj", "{2E680F32-3F49-42A6-B22A-38CC295D1A43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vehicle.Service.Common", "Vehicle.Service.Common\Vehicle.Service.Common.csproj", "{8AA6C37A-A18F-4551-98BE-3C568548FFB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vehicle.Service.Common", "Vehicle.Service.Common\Vehicle.Service.Common.csproj", "{8AA6C37A-A18F-4551-98BE-3C568548FFB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vehicle.Common", "Vehicle.Common\Vehicle.Common.csproj", "{6E4DED2F-B869-4A8B-9CCB-CA98943BA0CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{8AA6C37A-A18F-4551-98BE-3C568548FFB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AA6C37A-A18F-4551-98BE-3C568548FFB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AA6C37A-A18F-4551-98BE-3C568548FFB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E4DED2F-B869-4A8B-9CCB-CA98943BA0CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E4DED2F-B869-4A8B-9CCB-CA98943BA0CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E4DED2F-B869-4A8B-9CCB-CA98943BA0CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E4DED2F-B869-4A8B-9CCB-CA98943BA0CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

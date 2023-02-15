@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using Vehicle.Common;
 using Vehicle.Model;
 using Vehicle.Model.Common;
 using Vehicle.Service.Common;
@@ -42,6 +43,18 @@ namespace Vehicle.WebAPI.Controllers
             IEnumerable<IVehicleMakeModel> vehicleMakes = await _service.GetVehicleMakes();
             List<VehicleMakeGetModel> vehicleMakesGetModel = _mapper.Map<List<VehicleMakeGetModel>>(vehicleMakes);
             return Ok(vehicleMakesGetModel);
+        }
+
+        [HttpGet("Filtered")]
+        public async Task<IActionResult> GetFilteredVehicleMakes(string? searchString, int? page, string? sortBy, bool isDesc)
+        {
+            Filtering filter = new Filtering(searchString);
+            Sorting sorting = new Sorting(sortBy, isDesc);
+            Paging paging = new Paging(page);
+            IEnumerable<IVehicleMakeModel> vehicleMakes = await _service.GetFilteredVehicleMakes(filter, paging, sorting);
+            List<VehicleMakeGetModel> vehicleMakesGetModel = _mapper.Map<List<VehicleMakeGetModel>>(vehicleMakes);
+            return Ok(vehicleMakesGetModel);
+
         }
 
         [HttpPost]
@@ -89,5 +102,7 @@ namespace Vehicle.WebAPI.Controllers
                 return NotFound();
             }
         }
+
+
     }
 }

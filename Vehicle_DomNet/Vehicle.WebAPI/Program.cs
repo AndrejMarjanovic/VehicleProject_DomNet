@@ -24,6 +24,8 @@ builder.Services.AddTransient<IVehicleModelService, VehicleModelService>();
 builder.Services.AddTransient<IVehicleModelRepository, VehicleModelRepository>();
 builder.Services.AddTransient<IVehicleModelModel, VehicleModelModel>();
 
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");

@@ -10,6 +10,7 @@ using Vehicle.DAL.Entiteti;
 using Vehicle.Model;
 using Vehicle.Model.Common;
 using Vehicle.Repository.Common;
+using Vehicle.Common;
 
 namespace Vehicle.Repository
 {
@@ -17,12 +18,15 @@ namespace Vehicle.Repository
     {
         private readonly VehicleContext _db;
         private readonly IMapper mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public VehicleMakeRepository(VehicleContext context, IMapper map)
+        public VehicleMakeRepository(VehicleContext context, IMapper map, IUnitOfWork unitOfWork)
         {
             mapper = map;
             _db = context;
+            _unitOfWork = unitOfWork;
         }
+
         public async Task<IVehicleMakeModel> GetVehicleMakeById(int id)
         {
             VehicleMake vehicleMake = _db.VehicleMake.Find(id);
@@ -40,7 +44,7 @@ namespace Vehicle.Repository
             {
                VehicleMake vehicleMake = mapper.Map<VehicleMake>(vehicleMakeModel);
                await _db.VehicleMake.AddAsync(vehicleMake);
-               await _db.SaveChangesAsync();
+               await _unitOfWork.Save();
             }
             catch(Exception ex)
             {
@@ -55,7 +59,7 @@ namespace Vehicle.Repository
                 VehicleMake vehicleMake = mapper.Map<VehicleMake>(vehicleMakeModel);
                 vehicleMake.Id = id;
                 _db.Entry(vehicleMake).State = EntityState.Modified;
-                await _db.SaveChangesAsync();
+                await _unitOfWork.Save();
             }
             catch(Exception ex)
             {
@@ -69,7 +73,7 @@ namespace Vehicle.Repository
             {
                 VehicleMake vehicleMake = await _db.VehicleMake.FindAsync(id);
                 _db.Remove(vehicleMake);
-                await _db.SaveChangesAsync();
+                await _unitOfWork.Save();
 
             }
             catch(Exception ex)
@@ -78,5 +82,56 @@ namespace Vehicle.Repository
             }
 
         }
+
+        public async Task<IEnumerable<IVehicleMakeModel>> GetFilteredVehicleMakes(Filtering filter, Paging paging, Sorting sorting)
+        {
+
+            var vMakeList = await _db.VehicleMake.ToListAsync();
+            var vehicleMakes = mapper.Map<IEnumerable<VehicleMakeModel>>(vMakeList).AsQueryable();
+
+            if (filter.Filter())
+            {
+                vehicleMakes = vehicleMakes.Where(n => n.Name.ToLower().Contains(filter.FilterString) || n.Abrv.ToLower().Contains(filter.FilterString));
+            }
+            
+            switch (sorting.SortBy)
+            {
+                case "name":
+                    if (!sorting.IsDesending)
+                    {
+                        vehicleMakes = vehicleMakes.OrderBy(x => x.Name);
+                    }
+                    else
+                    {
+                        vehicleMakes = vehicleMakes.OrderByDescending(x => x.Name);
+                    }
+                    break;
+
+                case "abrv":
+                    if (!sorting.IsDesending)
+                    {
+                        vehicleMakes = vehicleMakes.OrderBy(x => x.Abrv);
+                    }
+                    else
+                    {
+                        vehicleMakes = vehicleMakes.OrderByDescending(x => x.Abrv);
+                    }
+                    break;
+
+                default:
+                    if (!sorting.IsDesending)
+                    {
+                        vehicleMakes = vehicleMakes.OrderBy(x => x.Id);
+                    }
+                    else
+                    {
+                        vehicleMakes = vehicleMakes.OrderByDescending(x => x.Id); 
+                    }
+                    break;
+            }
+
+            return vehicleMakes.Skip(paging.ItemsToSkip).Take(paging.PageSize);
+        }
+
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vehicle.Common;
 using Vehicle.Model;
 using Vehicle.Model.Common;
 
@@ -15,5 +16,6 @@ namespace Vehicle.Repository.Common
         Task AddVehicleModel(IVehicleModelModel vehicleModel);
         Task EditVehicleModel(int id, IVehicleModelModel vehicleModel);
         Task DeleteVehicleModel(int id);
+        Task<IEnumerable<IVehicleModelModel>> GetFilteredVehicleModels(Filtering filter, Paging paging, Sorting sorting);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vehicle.Common;
 using Vehicle.Model;
 using Vehicle.Model.Common;
 using Vehicle.Repository.Common;
@@ -27,6 +28,13 @@ namespace Vehicle.Service
         public async Task<IEnumerable<IVehicleMakeModel>> GetVehicleMakes()
         {
             return await VMakeRepository.GetVehicleMakes();
+        }
+
+        //Get all VehicleMakes by filter or page
+
+        public async Task<IEnumerable<IVehicleMakeModel>> GetFilteredVehicleMakes(Filtering filter, Paging paging, Sorting sorting)
+        {
+            return await VMakeRepository.GetFilteredVehicleMakes(filter, paging, sorting);
         }
 
         public async Task AddVehicleMake(IVehicleMakeModel vehicleMakeModel)

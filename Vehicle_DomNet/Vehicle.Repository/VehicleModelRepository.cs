@@ -10,6 +10,7 @@ using Vehicle.DAL.Entiteti;
 using Vehicle.Model;
 using Vehicle.Model.Common;
 using Vehicle.Repository.Common;
+using Vehicle.Common;
 
 namespace Vehicle.Repository
 {
@@ -17,11 +18,13 @@ namespace Vehicle.Repository
     {
         private readonly VehicleContext _db;
         private readonly IMapper mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public VehicleModelRepository(VehicleContext context, IMapper map)
+        public VehicleModelRepository(VehicleContext context, IMapper map, IUnitOfWork unitOfWork)
         {
             mapper = map;
             _db = context;
+            _unitOfWork = unitOfWork;
         }
         public async Task<IVehicleModelModel> GetVehicleModelById(int id)
         {
@@ -40,7 +43,7 @@ namespace Vehicle.Repository
             {
                VehicleModel vehicleModel = mapper.Map<VehicleModel>(vehicleModelModel);
                await _db.VehicleModel.AddAsync(vehicleModel);
-               await _db.SaveChangesAsync();
+               await _unitOfWork.Save();
             }
             catch(Exception ex)
             {
@@ -55,7 +58,7 @@ namespace Vehicle.Repository
                 VehicleModel vehicleModel = mapper.Map<VehicleModel>(vehicleModelModel);
                 vehicleModel.Id = id;
                 _db.Entry(vehicleModel).State = EntityState.Modified;
-                await _db.SaveChangesAsync();
+                await _unitOfWork.Save();
             }
             catch(Exception ex)
             {
@@ -69,7 +72,7 @@ namespace Vehicle.Repository
             {
                 VehicleModel vehicleModel = await _db.VehicleModel.FindAsync(id);
                 _db.Remove(vehicleModel);
-                await _db.SaveChangesAsync();
+                await _unitOfWork.Save();
 
             }
             catch(Exception ex)
@@ -77,6 +80,58 @@ namespace Vehicle.Repository
                 throw new Exception("Operation failed.", ex);
             }
 
+        }
+
+        public async Task<IEnumerable<IVehicleModelModel>> GetFilteredVehicleModels(Filtering filter, Paging paging, Sorting sorting)
+        {
+
+            var vModelList = await _db.VehicleModel.Include(m=>m.VehicleMake).ToListAsync();
+            var vehicleModels = mapper.Map<IEnumerable<VehicleModelModel>>(vModelList).AsQueryable();
+
+            if (filter.Filter())
+            {
+                vehicleModels = vehicleModels.Where(m => m.Name.ToLower().Contains(filter.FilterString) 
+                || m.Abrv.ToLower().Contains(filter.FilterString) 
+                || m.VehicleMake.Name.ToLower().Contains(filter.FilterString));
+            }
+
+            switch (sorting.SortBy)
+            {
+                case "name":
+                    if (!sorting.IsDesending)
+                    {
+                        vehicleModels = vehicleModels.OrderBy(x => x.Name);
+                    }
+                    else
+                    {
+                        vehicleModels = vehicleModels.OrderByDescending(x => x.Name);
+                    }
+                    break;
+
+                case "abrv":
+                    if (!sorting.IsDesending)
+                    {
+                        vehicleModels = vehicleModels.OrderBy(x => x.Abrv);
+                    }
+                    else
+                    {
+                        vehicleModels = vehicleModels.OrderByDescending(x => x.Abrv);
+                    }
+                    break;
+
+                default:
+                    if (!sorting.IsDesending)
+                    {
+                        vehicleModels = vehicleModels.OrderBy(x => x.Id);
+                    }
+                    else
+                    {
+                        vehicleModels = vehicleModels.OrderByDescending(x => x.Id);
+                    }
+                    break;
+            }
+
+            return vehicleModels.Skip(paging.ItemsToSkip).Take(paging.PageSize);
         }
     }
 }

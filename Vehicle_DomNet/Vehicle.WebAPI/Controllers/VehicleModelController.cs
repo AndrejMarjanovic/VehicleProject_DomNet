@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Vehicle.Common;
 using Vehicle.Model;
 using Vehicle.Model.Common;
 using Vehicle.Service.Common;
@@ -41,6 +42,18 @@ namespace Vehicle.WebAPI.Controllers
             IEnumerable<IVehicleModelModel> vehicleModels = await _service.GetVehicleModels();
             List<VehicleModelGetModel> vehicleModelsGetModel = _mapper.Map<List<VehicleModelGetModel>>(vehicleModels);
             return Ok(vehicleModelsGetModel);
+        }
+
+        [HttpGet("Filtered")]
+        public async Task<IActionResult> GetFilteredVehicleModels(string? searchString, int? page, string? sortBy, bool isDesc)
+        {
+            Filtering filter = new Filtering(searchString);
+            Sorting sorting = new Sorting(sortBy, isDesc);
+            Paging paging = new Paging(page);
+            IEnumerable<IVehicleModelModel> vehicleModels = await _service.GetFilteredVehicleModels(filter, paging, sorting);
+            List<VehicleModelGetModel> vehicleModelGetModel = _mapper.Map<List<VehicleModelGetModel>>(vehicleModels);
+            return Ok(vehicleModelGetModel);
+
         }
 
         [HttpPost]

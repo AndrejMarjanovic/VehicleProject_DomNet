@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vehicle.Common;
 using Vehicle.Model;
 using Vehicle.Model.Common;
 using Vehicle.Repository.Common;
@@ -27,6 +28,11 @@ namespace Vehicle.Service
         public async Task<IEnumerable<IVehicleModelModel>> GetVehicleModels()
         {
             return await VModelRepository.GetVehicleModels();
+        }
+
+        public async Task<IEnumerable<IVehicleModelModel>> GetFilteredVehicleModels(Filtering filter, Paging paging, Sorting sorting)
+        {
+            return await VModelRepository.GetFilteredVehicleModels(filter, paging, sorting);
         }
 
         public async Task AddVehicleModel(IVehicleModelModel vehicleModelModel)

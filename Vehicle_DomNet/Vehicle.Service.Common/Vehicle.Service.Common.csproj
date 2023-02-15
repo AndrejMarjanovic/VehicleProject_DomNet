@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Vehicle.Common\Vehicle.Common.csproj" />
     <ProjectReference Include="..\Vehicle.Model.Common\Vehicle.Model.Common.csproj" />
     <ProjectReference Include="..\Vehicle.Model\Vehicle.Model.csproj" />
   </ItemGroup>
