@@ -1,3 +1,5 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Vehicle.DAL;
 using Vehicle.Model;
@@ -9,22 +11,31 @@ using Vehicle.Service.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+
+builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
+{
+    // Declare your services with proper lifetime
+
+    builder.RegisterType<VehicleMakeService>().As<IVehicleMakeService>().InstancePerDependency();
+    builder.RegisterType<VehicleMakeRepository>().As<IVehicleMakeRepository>().InstancePerDependency();
+    builder.RegisterType<VehicleMakeModel>().As<IVehicleMakeModel>().InstancePerDependency();
+
+    builder.RegisterType<VehicleModelService>().As<IVehicleModelService>().InstancePerDependency();
+    builder.RegisterType<VehicleModelRepository>().As<IVehicleModelRepository>().InstancePerDependency();
+    builder.RegisterType<VehicleModelModel>().As<IVehicleModelModel>().InstancePerDependency();
+
+    builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerDependency();
+
+});
+
+
 // Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddTransient<IVehicleMakeService, VehicleMakeService>();
-builder.Services.AddTransient<IVehicleMakeRepository, VehicleMakeRepository>();
-builder.Services.AddTransient<IVehicleMakeModel, VehicleMakeModel>();
-
-builder.Services.AddTransient<IVehicleModelService, VehicleModelService>();
-builder.Services.AddTransient<IVehicleModelRepository, VehicleModelRepository>();
-builder.Services.AddTransient<IVehicleModelModel, VehicleModelModel>();
-
-builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
