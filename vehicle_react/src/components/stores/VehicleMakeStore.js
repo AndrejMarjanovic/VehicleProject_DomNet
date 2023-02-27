@@ -10,10 +10,12 @@ class VehicleMakeStore {
       makes: observable,
       sortBy: observable,
       isDesc: observable,
+      search: observable,
       getFilteredVehicleMakesAsync: action,
     });
   }
   makes = [];
+  search = "";
   sortBy = "";
   isDesc = false;
 
@@ -21,6 +23,7 @@ class VehicleMakeStore {
     const params = {
       sortBy: this.sortBy,
       isDesc: this.isDesc,
+      search: this.search,
     };
     try {
       const { data } = await this.vehicleMakeService.getFiltered(params);
@@ -50,6 +53,11 @@ class VehicleMakeStore {
   sortVehicleMakesBy = async (radio, check) => {
     this.sortBy = radio;
     this.isDesc = check;
+    await this.getFilteredVehicleMakesAsync();
+  };
+
+  searchVehicleMakes = async (search) => {
+    this.search = search;
     await this.getFilteredVehicleMakesAsync();
   };
 

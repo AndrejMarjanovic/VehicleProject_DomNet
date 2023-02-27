@@ -8,12 +8,14 @@ class VehicleModelStore {
 
     makeObservable(this, {
       models: observable,
+      search: observable,
       sortBy: observable,
       isDesc: observable,
       getFilteredVehicleModelsAsync: action,
     });
   }
   models = [];
+  search = "";
   sortBy = "";
   isDesc = false;
 
@@ -30,6 +32,7 @@ class VehicleModelStore {
     const params = {
       sortBy: this.sortBy,
       isDesc: this.isDesc,
+      search: this.search,
     };
     try {
       const { data } = await this.vehicleModelService.getFiltered(params);
@@ -50,6 +53,11 @@ class VehicleModelStore {
   sortVehicleModelsBy = async (radio, check) => {
     this.sortBy = radio;
     this.isDesc = check;
+    await this.getFilteredVehicleModelsAsync();
+  };
+
+  searchVehicleModels = async (search) => {
+    this.search = search;
     await this.getFilteredVehicleModelsAsync();
   };
 
