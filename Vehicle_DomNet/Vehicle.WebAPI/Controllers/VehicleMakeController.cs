@@ -46,12 +46,11 @@ namespace Vehicle.WebAPI.Controllers
         }
 
         [HttpGet("Filtered")]
-        public async Task<IActionResult> GetFilteredVehicleMakes(string? searchString, int? page, string? sortBy, bool isDesc)
+        public async Task<IActionResult> GetFilteredVehicleMakes(string? search, int? page, string? sortBy, bool isDesc)
         {
-            Filtering filter = new Filtering(searchString);
             Sorting sorting = new Sorting(sortBy, isDesc);
             Paging paging = new Paging(page);
-            IEnumerable<IVehicleMakeModel> vehicleMakes = await _service.GetFilteredVehicleMakes(filter, paging, sorting);
+            IEnumerable<IVehicleMakeModel> vehicleMakes = await _service.GetFilteredVehicleMakes(search, paging, sorting);
             List<VehicleMakeGetModel> vehicleMakesGetModel = _mapper.Map<List<VehicleMakeGetModel>>(vehicleMakes);
             return Ok(vehicleMakesGetModel);
 

@@ -30,7 +30,7 @@ namespace Vehicle.Service
             return await VModelRepository.GetVehicleModels();
         }
 
-        public async Task<IEnumerable<IVehicleModelModel>> GetFilteredVehicleModels(Filtering filter, Paging paging, Sorting sorting)
+        public async Task<IEnumerable<IVehicleModelModel>> GetFilteredVehicleModels(string filter, Paging paging, Sorting sorting)
         {
             return await VModelRepository.GetFilteredVehicleModels(filter, paging, sorting);
         }

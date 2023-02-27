@@ -16,6 +16,6 @@ namespace Vehicle.Repository.Common
         Task AddVehicleModel(IVehicleModelModel vehicleModel);
         Task EditVehicleModel(int id, IVehicleModelModel vehicleModel);
         Task DeleteVehicleModel(int id);
-        Task<IEnumerable<IVehicleModelModel>> GetFilteredVehicleModels(Filtering filter, Paging paging, Sorting sorting);
+        Task<IEnumerable<IVehicleModelModel>> GetFilteredVehicleModels(string filter, Paging paging, Sorting sorting);
     }
 }

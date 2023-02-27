@@ -32,7 +32,7 @@ namespace Vehicle.Service
 
         //Get all VehicleMakes by filter or page
 
-        public async Task<IEnumerable<IVehicleMakeModel>> GetFilteredVehicleMakes(Filtering filter, Paging paging, Sorting sorting)
+        public async Task<IEnumerable<IVehicleMakeModel>> GetFilteredVehicleMakes(string filter, Paging paging, Sorting sorting)
         {
             return await VMakeRepository.GetFilteredVehicleMakes(filter, paging, sorting);
         }

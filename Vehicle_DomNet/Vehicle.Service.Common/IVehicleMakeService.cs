@@ -16,6 +16,6 @@ namespace Vehicle.Service.Common
         Task AddVehicleMake(IVehicleMakeModel vehicleMake);
         Task EditVehicleMake(int id, IVehicleMakeModel vehicleMake);
         Task DeleteVehicleMake(int id);
-        Task<IEnumerable<IVehicleMakeModel>> GetFilteredVehicleMakes(Filtering filter, Paging paging, Sorting sorting);
+        Task<IEnumerable<IVehicleMakeModel>> GetFilteredVehicleMakes(string filter, Paging paging, Sorting sorting);
     }
 }

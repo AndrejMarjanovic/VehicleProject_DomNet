@@ -34,7 +34,7 @@ namespace Vehicle.Repository
 
         public async Task<IEnumerable<IVehicleModelModel>> GetVehicleModels()
         {
-             return mapper.Map<IEnumerable<VehicleModelModel>>(_db.VehicleModel);
+             return mapper.Map<IEnumerable<VehicleModelModel>>(_db.VehicleModel.Include(x=>x.VehicleMake));
         }
 
         public async Task AddVehicleModel(IVehicleModelModel vehicleModelModel)
@@ -82,17 +82,17 @@ namespace Vehicle.Repository
 
         }
 
-        public async Task<IEnumerable<IVehicleModelModel>> GetFilteredVehicleModels(Filtering filter, Paging paging, Sorting sorting)
+        public async Task<IEnumerable<IVehicleModelModel>> GetFilteredVehicleModels(string filter, Paging paging, Sorting sorting)
         {
 
             var vModelList = await _db.VehicleModel.Include(m=>m.VehicleMake).ToListAsync();
             var vehicleModels = mapper.Map<IEnumerable<VehicleModelModel>>(vModelList).AsQueryable();
 
-            if (filter.Filter())
+            if (!string.IsNullOrEmpty(filter))
             {
-                vehicleModels = vehicleModels.Where(m => m.Name.ToLower().Contains(filter.FilterString) 
-                || m.Abrv.ToLower().Contains(filter.FilterString) 
-                || m.VehicleMake.Name.ToLower().Contains(filter.FilterString));
+                vehicleModels = vehicleModels.Where(m => m.Name.ToLower().Contains(filter.ToLower()) 
+                || m.Abrv.ToLower().Contains(filter.ToLower()) 
+                || m.VehicleMake.Name.ToLower().Contains(filter.ToLower()));
             }
 
             switch (sorting.SortBy)
@@ -108,14 +108,14 @@ namespace Vehicle.Repository
                     }
                     break;
 
-                case "abrv":
+                case "make":
                     if (!sorting.IsDesending)
                     {
-                        vehicleModels = vehicleModels.OrderBy(x => x.Abrv);
+                        vehicleModels = vehicleModels.OrderBy(x => x.VehicleMake.Name);
                     }
                     else
                     {
-                        vehicleModels = vehicleModels.OrderByDescending(x => x.Abrv);
+                        vehicleModels = vehicleModels.OrderByDescending(x => x.VehicleMake.Name);
                     }
                     break;
 

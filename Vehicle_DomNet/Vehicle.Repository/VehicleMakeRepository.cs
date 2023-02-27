@@ -83,15 +83,15 @@ namespace Vehicle.Repository
 
         }
 
-        public async Task<IEnumerable<IVehicleMakeModel>> GetFilteredVehicleMakes(Filtering filter, Paging paging, Sorting sorting)
+        public async Task<IEnumerable<IVehicleMakeModel>> GetFilteredVehicleMakes(string filter, Paging paging, Sorting sorting)
         {
 
             var vMakeList = await _db.VehicleMake.ToListAsync();
             var vehicleMakes = mapper.Map<IEnumerable<VehicleMakeModel>>(vMakeList).AsQueryable();
 
-            if (filter.Filter())
+            if (!string.IsNullOrEmpty(filter))
             {
-                vehicleMakes = vehicleMakes.Where(n => n.Name.ToLower().Contains(filter.FilterString) || n.Abrv.ToLower().Contains(filter.FilterString));
+                vehicleMakes = vehicleMakes.Where(n => n.Name.ToLower().Contains(filter.ToLower()) || n.Abrv.ToLower().Contains(filter.ToLower()));
             }
             
             switch (sorting.SortBy)
