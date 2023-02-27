@@ -4,12 +4,25 @@ import { Table, Button } from "react-bootstrap";
 
 const VehicleModelTable = ({ rootStore }) => {
   useEffect(() => {
-    rootStore.vehicleModelStore.getVehicleModelsAsync();
+    rootStore.vehicleModelStore.getFilteredVehicleModelsAsync();
   }, [])
 
+  function sortBy(radio, checkDesc) {
+    var checkBox = document.getElementById("isDesc");
+    var checkDesc;
+
+    if (checkBox.checked == true) {
+      checkDesc = true;
+    } else {
+      checkDesc = false;
+    }
+    rootStore.vehicleModelStore.sortVehicleModelsBy(radio, checkDesc);
+
+  };
+  
   const deleteVehicleModel = (Id, Name) => {
     if (window.confirm("Are you sre you want to permanently delete " + Name + "?")) {
-      rootStore.vehicleModelStore.deleteVehicleModelAsync(Id).then(() => rootStore.vehicleModelStore.getVehicleModelsAsync());
+      rootStore.vehicleModelStore.deleteVehicleModelAsync(Id).then(() => rootStore.vehicleModelStore.getFilteredVehicleModelsAsync());
     }
   }
 
@@ -17,6 +30,36 @@ const VehicleModelTable = ({ rootStore }) => {
     <div>
       <Table>
         <thead>
+        <tr>
+            <th>
+            <input
+                type="radio"
+                id="ByName"
+                name="SortBy"
+                value="name" 
+                onClick={() => sortBy("name")} />
+              <label>Sort</label>
+            </th>
+            <th>
+           
+            </th>
+            <th>
+            <input
+                type="radio"
+                id="byMake"
+                name="SortBy"
+                value="make" 
+                onClick={() => sortBy("make")} />
+              <label>Sort</label>
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                id="isDesc"
+                name="isDesc" />
+              <label>Descending</label>
+            </th>
+          </tr>
           <tr>
             <th>Name</th>
             <th>Abbreviation</th>

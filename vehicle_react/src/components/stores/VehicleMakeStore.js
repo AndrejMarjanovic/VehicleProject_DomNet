@@ -8,10 +8,27 @@ class VehicleMakeStore {
 
     makeObservable(this, {
       makes: observable,
-      getVehicleMakesAsync: action,
+      sortBy: observable,
+      isDesc: observable,
+      getFilteredVehicleMakesAsync: action,
     });
   }
   makes = [];
+  sortBy = "";
+  isDesc = false;
+
+  getFilteredVehicleMakesAsync = async () => {
+    const params = {
+      sortBy: this.sortBy,
+      isDesc: this.isDesc,
+    };
+    try {
+      const { data } = await this.vehicleMakeService.getFiltered(params);
+    this.makes = [...data];
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   getVehicleMakesAsync = async () => {
     try {
@@ -28,6 +45,12 @@ class VehicleMakeStore {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  sortVehicleMakesBy = async (radio, check) => {
+    this.sortBy = radio;
+    this.isDesc = check;
+    await this.getFilteredVehicleMakesAsync();
   };
 
 }
