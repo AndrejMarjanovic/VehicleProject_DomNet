@@ -8,12 +8,16 @@ class VehicleMakeStore {
 
     makeObservable(this, {
       makes: observable,
+      make: observable,
       sortBy: observable,
       isDesc: observable,
       search: observable,
-      getFilteredVehicleMakesAsync: action,
     });
   }
+  make = {
+    name: "",
+    abrv: ""
+  };
   makes = [];
   search = "";
   sortBy = "";
@@ -42,6 +46,17 @@ class VehicleMakeStore {
     }
   };
 
+  postVehicleMakeAsync = async (make) => {
+    try {
+      const response = await this.vehicleMakeService.post(make);
+      if (response.status === 201) {
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   deleteVehicleMakeAsync = async (id) => {
     try {
       await this.vehicleMakeService.delete(id);
@@ -60,6 +75,10 @@ class VehicleMakeStore {
     this.search = search;
     await this.getFilteredVehicleMakesAsync();
   };
+
+  setMake = async (object) => {
+    this.make = object;
+  }
 
 }
 

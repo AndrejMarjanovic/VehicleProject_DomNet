@@ -42,6 +42,17 @@ class VehicleModelStore {
     }
   };
 
+  postVehicleModelAsync = async (model) => {
+    try {
+      const response = await this.vehicleModelService.post(model);
+      if (response.status === 201) {
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   deleteVehicleModelAsync = async (id) => {
     try {
       await this.vehicleModelService.delete(id);

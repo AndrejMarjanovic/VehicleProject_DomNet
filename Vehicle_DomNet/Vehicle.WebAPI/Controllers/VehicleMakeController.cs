@@ -63,11 +63,11 @@ namespace Vehicle.WebAPI.Controllers
             {
                 IVehicleMakeModel vehicleMakeModel = _mapper.Map<VehicleMakeModel>(vehicleMakePostModel);
                 await _service.AddVehicleMake(vehicleMakeModel);
-                return Ok(vehicleMakePostModel);
+                return CreatedAtAction(nameof(GetVehicleMakes), vehicleMakePostModel);
             }
-            catch
+            catch(Exception error)
             {
-                return BadRequest();
+                return BadRequest(error.Message);
             }
         }
 
@@ -80,9 +80,9 @@ namespace Vehicle.WebAPI.Controllers
                 await _service.EditVehicleMake(id, vehicleMake);
                 return Ok(vehicleMakePostModel);
             }
-            catch
+            catch(Exception error)
             {
-                return BadRequest();
+                return BadRequest(error.Message);
             }
         }
 

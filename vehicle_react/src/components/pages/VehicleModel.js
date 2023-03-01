@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { observer, inject } from "mobx-react";
 import { Table, Button } from "react-bootstrap";
+import CreateModelComponent from "../CreateModelComponent";
 
 const VehicleModel = ({ rootStore }) => {
   useEffect(() => {
@@ -9,15 +10,7 @@ const VehicleModel = ({ rootStore }) => {
 
   function sortBy(radioBtn) {
     var checkBox = document.getElementById("isDesc");
-
-    var checkDesc = false;
-
-    if (checkBox.checked === true) {
-      checkDesc = true;
-    } else {
-      checkDesc = false;
-    }
-    rootStore.vehicleModelStore.sortVehicleModelsBy(radioBtn, checkDesc);
+    rootStore.vehicleModelStore.sortVehicleModelsBy(radioBtn, checkBox.checked);
 
   };
   
@@ -88,12 +81,17 @@ const VehicleModel = ({ rootStore }) => {
               <td>{x.abrv}</td>
               <td>{x.vehicleMake.name}</td>
               <td>
-                <Button variant="danger" onClick={() => ConfirmDelete(x.id, x.name)}>X</Button>
+                <Button variant="danger" onClick={() => ConfirmDelete(x.id, x.name)}>
+                  Delete</Button>
                 </td>
             </tr>
           ))}
         </tbody>
       </Table>
+      <div>
+       <br />
+       <CreateModelComponent/>
+      </div>
     </div>
   )
 }

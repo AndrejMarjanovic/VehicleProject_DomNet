@@ -10,21 +10,30 @@ class APIService {
     return axios.get(this.url);
   };
 
-  getFiltered = (route) => {
+  getFiltered = (filters) => {
     return axios.get(this.url + "/Filtered", {
-      params: {...route,},
+      params: {...filters},
     });
   };
 
   getById = (Id) => {
     return axios.get(this.url + "/" + Id);
   };
+
   post = (object) => {
-    return axios.post(this.url, object);
+    try {
+      return axios.post(this.url, object);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   put(id, object) {
+    try {
     return axios.put(this.url + "/" + id, object);
+    } catch(error){
+      console.log(error);
+    }
   }
 
   delete = (id) => {
