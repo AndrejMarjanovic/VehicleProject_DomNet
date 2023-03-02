@@ -14,6 +14,8 @@ const CreateMakeComponent = ({ rootStore }) => {
       await rootStore.vehicleMakeStore.postVehicleMakeAsync(make)
       .then(()=>window.alert("You added a new Vehicle Make!"))
       .then(()=>rootStore.vehicleMakeStore.getFilteredVehicleMakesAsync());
+      setName("");
+      setAbrv("");
     }
     catch (error) {
       console.log(error);
@@ -23,7 +25,7 @@ const CreateMakeComponent = ({ rootStore }) => {
 
     return (
       <div className="container" class="col-md-5">
-        <strong style={{display: 'flex', justifyContent: 'left'}}>Create a new "vehicle make" here:</strong>
+        <strong style={{display: 'flex', justifyContent: 'left'}}>Create a new 'vehicle make' here:</strong>
         <Row>
             <Form onSubmit={AddVehicleMake}>
               <Form.Group controlId="Name">

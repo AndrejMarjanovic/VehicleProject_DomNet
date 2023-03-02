@@ -12,25 +12,26 @@ const CreateModelComponent = ({ rootStore }) => {
 
   const [name, setName] = useState("");
   const [abrv, setAbrv] = useState("");
-  const [id, setId] = useState();
+  const [id, setId] = useState(0);
 
   const AddVehicleModel = async (event) => {
     event.preventDefault();
     let model = { name: name, abrv: abrv, vehicleMakeId: id };
     console.log(model);
-    if (await rootStore.vehicleModelStore.postVehicleModelAsync(model)) 
-    {
-      window.alert("You added a new Vehicle Model!").then(() => rootStore.vehicleModelStore.getFilteredVehicleModelsAsync());
-    }
-    else
-    {
-      window.alert("Failed to add new Vehicle Model!\nMake sure to select Vehicle Make.");
+    if (rootStore.vehicleModelStore.postVehicleModelAsync(model)) {
+      window.alert("You added a new Vehicle Model!");
+      rootStore.vehicleModelStore.getFilteredVehicleModelsAsync();
+      setName("");
+      setAbrv("");
+      setId(0);
+    } else {
+      window.alert("Failed to add new Vehicle Model.");
     }
   };
 
   return (
     <div className="container" class="col-md-5">
-      <strong style={{ display: 'flex', justifyContent: 'left' }}>Create a new "vehicle model" here:</strong>
+      <strong style={{ display: 'flex', justifyContent: 'left' }}>Create a new 'vehicle model' here:</strong>
       <Row>
         <Form onSubmit={AddVehicleModel}>
           <Form.Group controlId="Name">
@@ -55,11 +56,11 @@ const CreateModelComponent = ({ rootStore }) => {
             />
           </Form.Group>
           <Form.Group controlId="Id">
-          <br />
-            <Form.Control as="select"  type="select" className="select" required onChange={(e) => setId(e.target.value)}>
+            <br />
+            <Form.Select as="select" type="select" className="select" value={id} required onChange={(e) => setId(e.target.value)}>
+              <option value={""} hidden >Select a make</option>
               {makes.map((x) => (<option key={x.id} value={x.id}> {x.name} </option>))}
-              <option selected hidden>Select a Make</option>
-            </Form.Control>
+            </Form.Select>
           </Form.Group>
           <Form.Group>
             <br />

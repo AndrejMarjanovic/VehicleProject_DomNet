@@ -5,6 +5,7 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public string Abrv { get; set; }
-        public VehicleMakeGetModel VehicleMake { get; set; }
+        public int vehicleMakeId { get; set; }
+        public VehicleMakePostModel VehicleMake { get; set; }
     }
 }

@@ -7,6 +7,7 @@ class VehicleModelStore {
     this.vehicleModelService = vehicleModelService;
 
     makeObservable(this, {
+      model: observable,
       models: observable,
       search: observable,
       sortBy: observable,
@@ -14,6 +15,7 @@ class VehicleModelStore {
       getFilteredVehicleModelsAsync: action,
     });
   }
+  model = {};
   models = [];
   search = "";
   sortBy = "";
@@ -42,10 +44,30 @@ class VehicleModelStore {
     }
   };
 
+  getVehicleModelById = async (Id) => {
+    try {
+      const { data } = await this.vehicleModelService.getById(Id);
+      this.model = { ...data };
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   postVehicleModelAsync = async (model) => {
     try {
       const response = await this.vehicleModelService.post(model);
       if (response.status === 201) {
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  putVehicleModelAsync = async (id, x) => {
+    try {
+      const response = await this.vehicleModelService.put(id, x);
+      if (response.status === 200) {
         console.log(response);
       }
     } catch (error) {
@@ -71,6 +93,10 @@ class VehicleModelStore {
     this.search = search;
     await this.getFilteredVehicleModelsAsync();
   };
+
+  setModelAtributes = async (e) => {
+    this.model = { ...this.model, [e.target.name]: e.target.value };
+  }
 
 }
 

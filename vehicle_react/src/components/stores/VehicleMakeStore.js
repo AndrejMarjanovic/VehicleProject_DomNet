@@ -14,10 +14,7 @@ class VehicleMakeStore {
       search: observable,
     });
   }
-  make = {
-    name: "",
-    abrv: ""
-  };
+  make = {};
   makes = [];
   search = "";
   sortBy = "";
@@ -31,7 +28,7 @@ class VehicleMakeStore {
     };
     try {
       const { data } = await this.vehicleMakeService.getFiltered(params);
-    this.makes = [...data];
+      this.makes = [...data];
     } catch (error) {
       console.log(error);
     }
@@ -40,7 +37,16 @@ class VehicleMakeStore {
   getVehicleMakesAsync = async () => {
     try {
       const { data } = await this.vehicleMakeService.get();
-    this.makes = [...data];
+      this.makes = [...data];
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getVehicleMakeById = async (Id) => {
+    try {
+      const { data } = await this.vehicleMakeService.getById(Id);
+      this.make = { ...data };
     } catch (error) {
       console.log(error);
     }
@@ -50,6 +56,17 @@ class VehicleMakeStore {
     try {
       const response = await this.vehicleMakeService.post(make);
       if (response.status === 201) {
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  putVehicleMakeAsync = async (id, x) => {
+    try {
+      const response = await this.vehicleMakeService.put(id, x);
+      if (response.status === 200) {
         console.log(response);
       }
     } catch (error) {
@@ -76,10 +93,9 @@ class VehicleMakeStore {
     await this.getFilteredVehicleMakesAsync();
   };
 
-  setMake = async (object) => {
-    this.make = object;
+  setMakeAtributes = async (e) => {
+    this.make = { ...this.make, [e.target.name]: e.target.value };
   }
-
 }
 
 export { VehicleMakeStore };
