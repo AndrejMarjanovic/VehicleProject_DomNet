@@ -1,4 +1,4 @@
-import { makeObservable, observable, action } from "mobx";
+import { makeObservable, observable } from "mobx";
 
 
 class VehicleModelStore {
@@ -12,7 +12,7 @@ class VehicleModelStore {
       search: observable,
       sortBy: observable,
       isDesc: observable,
-      getFilteredVehicleModelsAsync: action,
+      page: observable,
     });
   }
   model = {};
@@ -20,6 +20,7 @@ class VehicleModelStore {
   search = "";
   sortBy = "";
   isDesc = false;
+  page = 1;
 
   getVehicleModelsAsync = async () => {
     try {
@@ -35,6 +36,7 @@ class VehicleModelStore {
       sortBy: this.sortBy,
       isDesc: this.isDesc,
       search: this.search,
+      page: this.page
     };
     try {
       const { data } = await this.vehicleModelService.getFiltered(params);
@@ -97,6 +99,11 @@ class VehicleModelStore {
   setModelAtributes = async (e) => {
     this.model = { ...this.model, [e.target.name]: e.target.value };
   }
+
+  setPageNumber = async (x) => {
+    this.page = x;
+    await this.getFilteredVehicleModelsAsync();
+  };
 
 }
 

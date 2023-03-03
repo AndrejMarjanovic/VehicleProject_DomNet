@@ -1,4 +1,4 @@
-import { makeObservable, observable, action } from "mobx";
+import { makeObservable, observable } from "mobx";
 
 
 class VehicleMakeStore {
@@ -12,6 +12,7 @@ class VehicleMakeStore {
       sortBy: observable,
       isDesc: observable,
       search: observable,
+      page: observable
     });
   }
   make = {};
@@ -19,12 +20,14 @@ class VehicleMakeStore {
   search = "";
   sortBy = "";
   isDesc = false;
+  page = 1;
 
   getFilteredVehicleMakesAsync = async () => {
     const params = {
       sortBy: this.sortBy,
       isDesc: this.isDesc,
       search: this.search,
+      page: this.page,
     };
     try {
       const { data } = await this.vehicleMakeService.getFiltered(params);
@@ -96,6 +99,11 @@ class VehicleMakeStore {
   setMakeAtributes = async (e) => {
     this.make = { ...this.make, [e.target.name]: e.target.value };
   }
+
+  setPageNumber = async (x) => {
+    this.page = x;
+    await this.getFilteredVehicleMakesAsync();
+  };
 }
 
 export { VehicleMakeStore };

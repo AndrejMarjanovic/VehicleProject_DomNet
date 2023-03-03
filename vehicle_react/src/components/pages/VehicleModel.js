@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { observer, inject } from "mobx-react";
 import { Table, Button, Modal, Form, Row } from "react-bootstrap";
 import CreateModelComponent from "../components/CreateModelComponent";
+import VehicleModelPaging from '../components/VehicleModelPaging';
 
 const VehicleModel = ({ rootStore }) => {
   useEffect(() => {
@@ -125,6 +126,11 @@ const VehicleModel = ({ rootStore }) => {
           ))}
         </tbody>
       </Table>
+
+      <div>
+        <br />
+        <VehicleModelPaging />
+      </div>
 
       <div>
         <br />
